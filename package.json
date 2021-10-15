@@ -1,24 +1,53 @@
 {
-  "name": "fmpa",
+  "name": "acredit_app",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "lint:js": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "npm run lint:js",
+    "test": "cross-env NODE_ENV=development mocha ./tests/**/*.test.js",
+    "docs": "./node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "dependencies": {
-    "@coreui/coreui": "^4.0.5",
-    "@coreui/vue": "^4.0.0-rc.4",
+    "@coreui/coreui": "^3.4.0",
+    "@coreui/icons": "^1.0.1",
+    "@coreui/icons-vue": "^1.3.5",
+    "@coreui/vue": "^3.2.11",
     "@coreui/vue-chartjs": "^1.0.6",
-    "@nuxt/content": "^1.14.0",
-    "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/pwa": "^3.3.5",
-    "bootstrap": "^4.6.0",
-    "bootstrap-vue": "^2.21.2",
-    "core-js": "^3.15.1",
-    "nuxt": "^2.15.7"
+    "@nuxt/content": "^1.9.0",
+    "@nuxt/http": "^0.6.2",
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/pwa": "^3.0.2",
+    "bootstrap": "^4.5.2",
+    "bootstrap-vue": "^2.17.3",
+    "core-js": "^3.6.5",
+    "dateformat": "^4.5.1",
+    "nuxt": "^2.14.6"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "^3.1.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "babel-eslint": "^10.1.0",
+    "chai": "^4.2.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "fibers": "^5.0.0",
+    "json-loader": "^0.5.7",
+    "prettier": "^2.1.2",
+    "pug": "^3.0.2",
+    "pug-plain-loader": "^1.1.0",
+    "sass": "^1.32.4",
+    "sass-loader": "^10.1.1"
+  },
+  "engines": {
+    "node": "14.17.0"
+  }
 }

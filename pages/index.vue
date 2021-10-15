@@ -1,11 +1,15 @@
 <template>
-  <CRow>
-    <CCol lg="4">Col1</CCol>
-    <CCol lg="4">Col1</CCol>
-    <CCol lg="4">Col1</CCol>
-  </CRow>
+  <div>
+    <CContainer>
+      <CRow>
+        <CCol sm="auto"> One of three columns </CCol>
+        <CCol sm="auto"> One of three columns </CCol>
+        <CCol sm="auto"> One of three columns </CCol>
+      </CRow>
+    </CContainer>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>

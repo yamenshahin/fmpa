@@ -1,0 +1,52 @@
+.btn .c-icon {
+  margin-top: 0.09875rem;
+}
+
+.card-header .c-icon {
+  margin-top: -3px;
+}
+
+.card-header {
+  font-size: 1.75rem;
+}
+
+.card-header .c-icon:not(.c-icon-c-s):not(.c-icon-custom-size) {
+  width: 1.75rem;
+  height: 1.75rem;
+  font-size: 1.75rem;
+}
+
+.card-header small {
+  font-size: 60%;
+}
+
+.lang-flag .c-icon:not(.c-icon-c-s):not(.c-icon-custom-size) {
+  width: 1.75rem;
+  height: 1.75rem;
+  font-size: 1.75rem;
+}
+
+.c-header-nav-items .c-header-nav-link.danger {
+  color: #c82333;
+}
+.mt-33 {
+  margin-top: 33px;
+}
+.image-banner-container{
+  position: relative;
+}
+.badge-banner{
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.775rem;
+}
+button.close{
+  opacity: 1;
+  color:#fff;
+}
+.c-sidebar.c-sidebar-light .c-sidebar-brand {
+ background: #ccccd0;
+}
