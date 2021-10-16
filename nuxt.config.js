@@ -16,10 +16,10 @@ const config = {
     process.env.NODE_ENV !== 'production'
       ? process.env.BASE_URL_DEV
       : process.env.BASE_URL_SERVER,
-  UPLOAD_FILES_URL:
+  API_KEY:
     process.env.NODE_ENV !== 'production'
-      ? process.env.UPLOAD_FILES_URL_DEV
-      : process.env.UPLOAD_FILES_URL_SERVER,
+      ? process.env.API_KEY_DEV
+      : process.env.API_KEY_SERVER,
 }
 // Use .env file
 require('dotenv').config()
@@ -69,7 +69,7 @@ export default {
   ],
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: config.BASE_URL + '/api/',
+    baseURL: config.BASE_URL,
   },
 
   server: {
