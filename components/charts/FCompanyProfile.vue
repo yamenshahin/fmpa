@@ -3,9 +3,11 @@
     <b-form-select
       v-model="selected"
       :options="symbols"
-      @change="updateData(selected)"
+      @change="getData(selected)"
     ></b-form-select>
-    <b-table striped :items="items"></b-table>
+    <div class="FCo-table">
+      <b-table striped :items="items" thead-class="hidden-header"></b-table>
+    </div>
   </div>
 </template>
 
@@ -13,12 +15,7 @@
 export default {
   data() {
     return {
-      items: [
-        { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-        { age: 38, first_name: 'Jami', last_name: 'Carney' },
-      ],
+      items: [['Loading...', 'Loading...']],
       selected: 'AAPL',
       symbols: [
         'AAPL',
@@ -150,7 +147,29 @@ export default {
       ],
     }
   },
-
-  methods: {},
+  async mounted() {
+    await this.getData('AAPL')
+  },
+  methods: {
+    async getData(symbol) {
+      await this.$axios
+        .$get(`profile/${symbol}?apikey=28538229427f33fe650c547a9a1e99e7`)
+        .then((res) => {
+          this.items = [
+            ['Currency', res[0].currency],
+            ['Price', res[0].price],
+            ['Beta', res[0].beta],
+            ['Vol Avg', res[0].volAvg],
+            ['market Cap', res[0].mktCap],
+            ['Last Div', res[0].lastDiv],
+            ['Range', res[0].range],
+            ['Changes', res[0].changes],
+            ['DFC Difference', res[0].dcfDiff],
+            ['DFC', res[0].dcf],
+            ['Exchange', res[0].exchangeShortName],
+          ]
+        })
+    },
+  },
 }
 </script>
