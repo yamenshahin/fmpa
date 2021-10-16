@@ -52,7 +52,7 @@
       <button
         type="button"
         :class="getActiveClass('5Y')"
-        @click="getData(1460, '5Y', selected)"
+        @click="updateData(1460, '5Y', selected)"
       >
         5Y
       </button>
