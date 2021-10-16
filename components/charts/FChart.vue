@@ -238,11 +238,10 @@ export default {
   },
   async mounted() {
     await this.getData(5, this.datasets[0].label)
-    this.symbols.sort()
   },
   methods: {
     /**
-     * Update data and active btn class and selected company symbole
+     * Update data and active btn class and selected company symbol
      */
     async updateData(days, ID, symbol) {
       this.btnActiveID = ID
