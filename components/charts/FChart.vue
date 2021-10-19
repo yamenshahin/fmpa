@@ -229,7 +229,7 @@ export default {
               time: {
                 unit: 'day',
                 displayFormats: {
-                  day: 'DD MMM YY',
+                  day: 'DD MMM',
                 },
               },
               ticks: {
@@ -269,22 +269,11 @@ export default {
      * Update data
      */
     async getData(days, symbol) {
-      await this.$axios
-        .$get(
-          `historical-price-full/${symbol}?serietype=line&timeseries=${days}&apikey=28538229427f33fe650c547a9a1e99e7`
-        )
-        .then((res) => {
-          const newData = []
-          const newLabels = []
+      const apiURL = this.getURL(days, symbol)
 
-          res.historical.forEach((result) => {
-            newData.push(result.close)
-            newLabels.push(result.date)
-          })
-
-          this.datasets[0].data = newData
-          this.labels = newLabels
-        })
+      await this.$axios.$get(apiURL).then((res) => {
+        this.setData(days, res)
+      })
     },
     /**
      * Set datasets label
@@ -293,48 +282,164 @@ export default {
       this.datasets[0].label = label
     },
     /**
+     * Get the API URL
+     */
+    getURL(days, symbol) {
+      let url = ''
+      switch (days) {
+        case 1:
+          url = `historical-chart/15min/${symbol}?timeseries=${days}&apikey=28538229427f33fe650c547a9a1e99e7`
+          break
+        case 5:
+          url = `historical-chart/1hour/${symbol}?timeseries=${days}&apikey=28538229427f33fe650c547a9a1e99e7`
+          break
+        default:
+          url = `historical-price-full/${symbol}?serietype=line&timeseries=${days}&apikey=28538229427f33fe650c547a9a1e99e7`
+      }
+      return url
+    },
+    /**
+     * Set chart data
+     */
+    setData(days, res) {
+      const newData = []
+      const newLabels = []
+      switch (days) {
+        case 1:
+          res.forEach((result) => {
+            // Only 1 day
+            const firstDateSTR = res[0].date
+            const firstDate = firstDateSTR.split(' ')[0]
+            const currentDateSTR = result.date
+            const currentDate = currentDateSTR.split(' ')[0]
+            // Only 1 day
+            if (currentDate !== firstDate) return
+            newData.push(result.close)
+            newLabels.push(result.date)
+          })
+          break
+        case 5:
+          res.forEach((result) => {
+            // Only 5 days
+            const firstDateSTR = res[0].date
+            const firstDate = new Date(firstDateSTR)
+            const currentDateSTR = result.date
+            const currentDate = new Date(currentDateSTR)
+            const dateDiff = Math.abs(firstDate - currentDate)
+            // Only 5 days
+            if (dateDiff > 432000000) return
+            newData.push(result.close)
+            newLabels.push(result.date)
+          })
+          break
+        default:
+          res.historical.forEach((result) => {
+            newData.push(result.close)
+            newLabels.push(result.date)
+          })
+      }
+      this.datasets[0].data = newData
+      this.labels = newLabels
+    },
+    /**
      * Set chart options
      */
     setOptions(days) {
       switch (days) {
         case 1:
           this.options = {
-            ...this.options,
+            elements: {
+              point: {
+                radius: 0.1,
+                hitRadius: 3,
+              },
+            },
+            scales: {
+              yAxes: [
+                {
+                  position: 'right',
+                },
+              ],
+              xAxes: [
+                {
+                  type: 'time',
+                  time: {
+                    unit: 'hour',
+                    displayFormats: {
+                      minute: 'h:mm a',
+                    },
+                  },
+                  ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 5,
+                  },
+                },
+              ],
+            },
           }
           break
         case 5:
           this.options = {
-            ...this.options,
-          }
-          break
-        case 30:
-          this.options = {
-            ...this.options,
-          }
-          break
-        case 90:
-          this.options = {
-            ...this.options,
-          }
-          break
-        case 180:
-          this.options = {
-            ...this.options,
-          }
-          break
-        case 365:
-          this.options = {
-            ...this.options,
-          }
-          break
-        case 1460:
-          this.options = {
-            ...this.options,
+            elements: {
+              point: {
+                radius: 0.1,
+                hitRadius: 3,
+              },
+            },
+            scales: {
+              yAxes: [
+                {
+                  position: 'right',
+                },
+              ],
+              xAxes: [
+                {
+                  type: 'time',
+                  time: {
+                    unit: 'day',
+                    displayFormats: {
+                      day: 'DD MMM',
+                    },
+                  },
+                  ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 5,
+                  },
+                },
+              ],
+            },
           }
           break
         default:
           this.options = {
-            ...this.options,
+            elements: {
+              point: {
+                radius: 0.1,
+                hitRadius: 3,
+              },
+            },
+            scales: {
+              yAxes: [
+                {
+                  position: 'right',
+                },
+              ],
+              xAxes: [
+                {
+                  type: 'time',
+                  time: {
+                    unit: 'day',
+                    displayFormats: {
+                      day: 'DD MMM YY',
+                    },
+                  },
+                  ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 5,
+                  },
+                },
+              ],
+            },
           }
       }
     },
