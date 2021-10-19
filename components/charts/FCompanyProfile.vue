@@ -15,6 +15,7 @@
 export default {
   data() {
     return {
+      APIKey: process.env.API_KEY,
       items: [['Loading...', 'Loading...']],
       selected: 'AAPL',
       symbols: [
@@ -152,23 +153,56 @@ export default {
   },
   methods: {
     async getData(symbol) {
+      let items = []
       await this.$axios
-        .$get(`profile/${symbol}?apikey=28538229427f33fe650c547a9a1e99e7`)
+        .$get(`v3/quote/${symbol}?apikey=${this.APIKey}`)
         .then((res) => {
-          this.items = [
-            ['Currency', res[0].currency],
-            ['Price', res[0].price],
-            ['Beta', res[0].beta],
-            ['Vol Avg', res[0].volAvg],
-            ['market Cap', res[0].mktCap],
-            ['Last Div', res[0].lastDiv],
-            ['Range', res[0].range],
-            ['Changes', res[0].changes],
-            ['DFC Difference', res[0].dcfDiff],
-            ['DFC', res[0].dcf],
-            ['Exchange', res[0].exchangeShortName],
+          items = [
+            ['Last', res[0].price],
+            ['Volume', res[0].volume],
+            ['Open', res[0].open],
+            ['Close', res[0].previousClose],
+            ['High', res[0].dayHigh],
+            ['Low', res[0].dayLow],
+            ['Beta', ''],
+            // ['Beta', res[0].beta],
+            ['Year High', res[0].yearHigh],
+            ['Year Low', res[0].yearLow],
+            ['Dividend', ''],
+            ['Div. Pay Date', ''],
+            ['Ex-Div date', ''],
+            // ['Dividend', res[0].dividend],
+            // ['Div. Pay Date', res[0].paymentDate],
+            // ['Ex-Div date', res[0].date],
+            ['Market Cap', res[0].marketCap],
+            ['Shares Out', res[0].sharesOutstanding],
+            ['PB Ratio', ''],
+            // ['PB Ratio', res[0].pbRatio],
+            ['PE', res[0].pe],
+            ['EPS', res[0].eps],
+            ['Exchange', ''],
+            // ['Exchange', res[0].exchangeShortName],
           ]
         })
+      await this.$axios
+        .$get(`v3/profile/${symbol}?apikey=${this.APIKey}`)
+        .then((res) => {
+          items[6] = ['Beta', res[0].beta]
+          items[17] = ['Exchange', res[0].exchangeShortName]
+        })
+      await this.$axios
+        .$get(`v3/key-metrics/${symbol}?apikey=${this.APIKey}`)
+        .then((res) => {
+          items[14] = ['PB Ratio', res[0].pbRatio]
+        })
+      await this.$axios
+        .$get(`v4/company-outlook?symbol=${symbol}&apikey=${this.APIKey}`)
+        .then((res) => {
+          items[9] = ['Dividend', res.stockDividend[0].dividend]
+          items[10] = ['Div. Pay Date', res.stockDividend[0].paymentDate]
+          items[11] = ['Ex-Div date', res.stockDividend[0].date]
+        })
+      this.items = items
     },
   },
 }

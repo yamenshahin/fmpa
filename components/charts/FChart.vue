@@ -64,6 +64,7 @@
 export default {
   data() {
     return {
+      APIKey: process.env.API_KEY,
       selected: 'AAPL',
       symbols: [
         'AAPL',
@@ -288,13 +289,13 @@ export default {
       let url = ''
       switch (days) {
         case 1:
-          url = `historical-chart/15min/${symbol}?timeseries=${days}&apikey=28538229427f33fe650c547a9a1e99e7`
+          url = `v3/historical-chart/15min/${symbol}?timeseries=${days}&apikey=${this.APIKey}`
           break
         case 5:
-          url = `historical-chart/1hour/${symbol}?timeseries=${days}&apikey=28538229427f33fe650c547a9a1e99e7`
+          url = `v3/historical-chart/1hour/${symbol}?timeseries=${days}&apikey=${this.APIKey}`
           break
         default:
-          url = `historical-price-full/${symbol}?serietype=line&timeseries=${days}&apikey=28538229427f33fe650c547a9a1e99e7`
+          url = `v3/historical-price-full/${symbol}?serietype=line&timeseries=${days}&apikey=${this.APIKey}`
       }
       return url
     },
