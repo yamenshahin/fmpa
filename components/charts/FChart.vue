@@ -214,7 +214,7 @@ export default {
         elements: {
           point: {
             radius: 0.1,
-            hitRadius: 1,
+            hitRadius: 3,
           },
         },
         scales: {
