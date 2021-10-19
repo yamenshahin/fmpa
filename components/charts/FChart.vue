@@ -211,6 +211,11 @@ export default {
         '2021-10-19',
       ],
       options: {
+        elements: {
+          point: {
+            radius: 0.1,
+          },
+        },
         scales: {
           yAxes: [
             {
