@@ -198,9 +198,11 @@ export default {
       await this.$axios
         .$get(`v4/company-outlook?symbol=${symbol}&apikey=${this.APIKey}`)
         .then((res) => {
-          items[9] = ['Dividend', res.stockDividend[0].dividend]
-          items[10] = ['Div. Pay Date', res.stockDividend[0].paymentDate]
-          items[11] = ['Ex-Div date', res.stockDividend[0].date]
+          if (res.stockDividend !== null) {
+            items[9] = ['Dividend', res.stockDividend[0].dividend]
+            items[10] = ['Div. Pay Date', res.stockDividend[0].paymentDate]
+            items[11] = ['Ex-Div date', res.stockDividend[0].date]
+          }
         })
       this.items = items
     },
