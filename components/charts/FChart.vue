@@ -200,7 +200,9 @@ export default {
         {
           label: 'AAPL',
           lineTension: 0.01,
-          backgroundColor: 'rgba(75,192,192,0.4)',
+          backgroundColor: 'rgba(52, 168, 83,0.4)',
+          borderColor: 'rgba(52, 168, 83,0.9)',
+          borderWidth: 2,
           data: [65.6, 59.6, 80.3, 81.1, 56.9, 55.8, 40.2],
         },
       ],
@@ -212,6 +214,22 @@ export default {
         '2021-10-19',
       ],
       options: {
+        legend: {
+          display: false,
+        },
+        tooltips: {
+          displayColors: false,
+
+          callbacks: {
+            label(tooltipItem) {
+              const label = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              }).format(tooltipItem.yLabel)
+              return label
+            },
+          },
+        },
         elements: {
           point: {
             radius: 0.1,
@@ -227,6 +245,7 @@ export default {
           xAxes: [
             {
               type: 'time',
+              distribution: 'series',
               time: {
                 unit: 'day',
                 displayFormats: {
@@ -289,10 +308,10 @@ export default {
       let url = ''
       switch (days) {
         case 1:
-          url = `v3/historical-chart/15min/${symbol}?timeseries=${days}&apikey=${this.APIKey}`
+          url = `v3/historical-chart/1min/${symbol}?timeseries=${days}&apikey=${this.APIKey}`
           break
         case 5:
-          url = `v3/historical-chart/1hour/${symbol}?timeseries=${days}&apikey=${this.APIKey}`
+          url = `v3/historical-chart/15min/${symbol}?timeseries=${days}&apikey=${this.APIKey}`
           break
         default:
           url = `v3/historical-price-full/${symbol}?serietype=line&timeseries=${days}&apikey=${this.APIKey}`
@@ -348,100 +367,59 @@ export default {
     setOptions(days) {
       switch (days) {
         case 1:
-          this.options = {
-            elements: {
-              point: {
-                radius: 0.1,
-                hitRadius: 3,
+          this.options.scales.xAxes = [
+            {
+              type: 'time',
+              distribution: 'series',
+              time: {
+                unit: 'hour',
+                displayFormats: {
+                  minute: 'h:mm a',
+                },
+              },
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 5,
               },
             },
-            scales: {
-              yAxes: [
-                {
-                  position: 'right',
-                },
-              ],
-              xAxes: [
-                {
-                  type: 'time',
-                  time: {
-                    unit: 'hour',
-                    displayFormats: {
-                      minute: 'h:mm a',
-                    },
-                  },
-                  ticks: {
-                    autoSkip: true,
-                    maxTicksLimit: 5,
-                  },
-                },
-              ],
-            },
-          }
+          ]
+
           break
         case 5:
-          this.options = {
-            elements: {
-              point: {
-                radius: 0.1,
-                hitRadius: 3,
+          this.options.scales.xAxes = [
+            {
+              type: 'time',
+              distribution: 'series',
+              time: {
+                unit: 'day',
+                displayFormats: {
+                  day: 'DD',
+                },
+              },
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 5,
               },
             },
-            scales: {
-              yAxes: [
-                {
-                  position: 'right',
-                },
-              ],
-              xAxes: [
-                {
-                  type: 'time',
-                  time: {
-                    unit: 'day',
-                    displayFormats: {
-                      day: 'DD MMM',
-                    },
-                  },
-                  ticks: {
-                    autoSkip: true,
-                    maxTicksLimit: 5,
-                  },
-                },
-              ],
-            },
-          }
+          ]
           break
         default:
-          this.options = {
-            elements: {
-              point: {
-                radius: 0.1,
-                hitRadius: 3,
+          this.options.scales.xAxes = [
+            {
+              type: 'time',
+              distribution: 'series',
+              time: {
+                unit: 'day',
+                displayFormats: {
+                  day: 'DD MMM YY',
+                },
+              },
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 5,
               },
             },
-            scales: {
-              yAxes: [
-                {
-                  position: 'right',
-                },
-              ],
-              xAxes: [
-                {
-                  type: 'time',
-                  time: {
-                    unit: 'day',
-                    displayFormats: {
-                      day: 'DD MMM YY',
-                    },
-                  },
-                  ticks: {
-                    autoSkip: true,
-                    maxTicksLimit: 5,
-                  },
-                },
-              ],
-            },
-          }
+          ]
       }
     },
   },
