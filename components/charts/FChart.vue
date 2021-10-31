@@ -255,6 +255,8 @@ export default {
               ticks: {
                 autoSkip: true,
                 maxTicksLimit: 5,
+                maxRotation: 0,
+                minRotation: 0,
               },
             },
           ],
@@ -365,61 +367,165 @@ export default {
      * Set chart options
      */
     setOptions(days) {
+      console.log('Set options')
       switch (days) {
         case 1:
-          this.options.scales.xAxes = [
-            {
-              type: 'time',
-              distribution: 'series',
-              time: {
-                unit: 'hour',
-                displayFormats: {
-                  minute: 'h:mm a',
+          console.log('Set options 1')
+          this.options = {
+            legend: {
+              display: false,
+            },
+            tooltips: {
+              displayColors: false,
+
+              callbacks: {
+                label(tooltipItem) {
+                  const label = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  }).format(tooltipItem.yLabel)
+                  return label
                 },
               },
-              ticks: {
-                autoSkip: true,
-                maxTicksLimit: 5,
+            },
+            elements: {
+              point: {
+                radius: 0.1,
+                hitRadius: 3,
               },
             },
-          ]
+            scales: {
+              yAxes: [
+                {
+                  position: 'right',
+                },
+              ],
+              xAxes: [
+                {
+                  type: 'time',
+                  distribution: 'series',
+                  time: {
+                    unit: 'hour',
+                    displayFormats: {
+                      minute: 'h:mm a',
+                    },
+                  },
+                  ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 5,
+                    maxRotation: 0,
+                    minRotation: 0,
+                  },
+                },
+              ],
+            },
+          }
 
           break
         case 5:
-          this.options.scales.xAxes = [
-            {
-              type: 'time',
-              distribution: 'series',
-              time: {
-                unit: 'day',
-                displayFormats: {
-                  day: 'DD',
+          console.log('Set options 5')
+          this.options = {
+            legend: {
+              display: false,
+            },
+            tooltips: {
+              displayColors: false,
+
+              callbacks: {
+                label(tooltipItem) {
+                  const label = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  }).format(tooltipItem.yLabel)
+                  return label
                 },
               },
-              ticks: {
-                autoSkip: true,
-                maxTicksLimit: 5,
+            },
+            elements: {
+              point: {
+                radius: 0.1,
+                hitRadius: 3,
               },
             },
-          ]
+            scales: {
+              yAxes: [
+                {
+                  position: 'right',
+                },
+              ],
+              xAxes: [
+                {
+                  type: 'time',
+                  distribution: 'series',
+                  time: {
+                    unit: 'day',
+                    displayFormats: {
+                      day: 'DD MMM',
+                    },
+                  },
+                  ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 5,
+                    maxRotation: 0,
+                    minRotation: 0,
+                  },
+                },
+              ],
+            },
+          }
+
           break
         default:
-          this.options.scales.xAxes = [
-            {
-              type: 'time',
-              distribution: 'series',
-              time: {
-                unit: 'day',
-                displayFormats: {
-                  day: 'DD MMM YY',
+          console.log('Set options all')
+          this.options = {
+            legend: {
+              display: false,
+            },
+            tooltips: {
+              displayColors: false,
+
+              callbacks: {
+                label(tooltipItem) {
+                  const label = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  }).format(tooltipItem.yLabel)
+                  return label
                 },
               },
-              ticks: {
-                autoSkip: true,
-                maxTicksLimit: 5,
+            },
+            elements: {
+              point: {
+                radius: 0.1,
+                hitRadius: 3,
               },
             },
-          ]
+            scales: {
+              yAxes: [
+                {
+                  position: 'right',
+                },
+              ],
+              xAxes: [
+                {
+                  type: 'time',
+                  distribution: 'series',
+                  time: {
+                    unit: 'day',
+                    displayFormats: {
+                      day: 'DD MMM YY',
+                    },
+                  },
+                  ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 5,
+                    maxRotation: 0,
+                    minRotation: 0,
+                  },
+                },
+              ],
+            },
+          }
       }
     },
   },
