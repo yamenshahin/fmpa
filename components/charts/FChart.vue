@@ -195,7 +195,6 @@ export default {
         'ZM',
       ],
       btnActiveID: '5D',
-      days: 20,
       datasets: [
         {
           label: 'AAPL',
@@ -272,11 +271,17 @@ export default {
      * Update data and active btn class and selected company symbol
      */
     async updateData(days, ID, symbol) {
-      this.btnActiveID = ID
+      this.setActiveClass(ID)
       await this.getData(days, symbol)
       this.setOptions(days)
       this.setLabel(symbol)
     },
+    setActiveClass(ID) {
+      this.btnActiveID = ID
+    },
+    /**
+     * Set active class
+     */
     /**
      * Get active class for btn
      */
@@ -287,12 +292,12 @@ export default {
         return 'btn btn-secondary'
       }
     },
+
     /**
      * Update data
      */
     async getData(days, symbol) {
       const apiURL = this.getURL(days, symbol)
-
       await this.$axios.$get(apiURL).then((res) => {
         this.setData(days, res)
       })
@@ -349,7 +354,7 @@ export default {
             const currentDate = new Date(currentDateSTR)
             const dateDiff = Math.abs(firstDate - currentDate)
             // Only 5 days
-            if (dateDiff > 432000000) return
+            if (dateDiff > 518400000) return
             newData.push(result.close)
             newLabels.push(result.date)
           })
