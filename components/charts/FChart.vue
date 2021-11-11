@@ -253,7 +253,7 @@ export default {
               },
               ticks: {
                 autoSkip: true,
-                maxTicksLimit: 5,
+                maxTicksLimit: 4,
                 maxRotation: 0,
                 minRotation: 0,
               },
@@ -354,7 +354,7 @@ export default {
             const currentDate = new Date(currentDateSTR)
             const dateDiff = Math.abs(firstDate - currentDate)
             // Only 5 days
-            if (dateDiff > 518400000) return
+            if (dateDiff > 596200005) return
             newData.push(result.close)
             newLabels.push(result.date)
           })
@@ -470,7 +470,7 @@ export default {
                   },
                   ticks: {
                     autoSkip: true,
-                    maxTicksLimit: 5,
+                    maxTicksLimit: 4,
                     maxRotation: 0,
                     minRotation: 0,
                   },
